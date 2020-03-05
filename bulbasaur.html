@@ -1,0 +1,21 @@
+<select id="info2">
+    <option value="0">Habilidad</option>
+    <option value="1">Indice de Juego</option>
+</select>
+
+<script> 
+    var info2 = $('#info2').get(0)
+    var archivo = ''
+    switch (info2.value) {
+        case "0": archivo = 'habilidad.html'
+            break;
+        case "1": archivo = 'indiceJuego.html'
+            break;
+    }
+    $.ajax({
+        "url": archivo,
+        "dataType": 'html',
+    }).done(function (data){
+        $('#info_habilidad').html(data).get(0).innerHTML = data
+    })
+</script>

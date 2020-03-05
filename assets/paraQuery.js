@@ -1,19 +1,18 @@
 const URL1 = 'https://pokeapi.co/api/v2/pokemon'
+const URL2 = 'https://pokeapi.co/api/v2/pokemon/1/'
 
 $(document).ready(() => {
-    $('#info').change(seleccion)
+    $('#seleccion_inicial').change(seleccion)
     seleccion()
 })
 
 function seleccion(){
-    var info = $('select').get(0)
+    var info = $('#seleccion_inicial').get(0)
     var archivo = ''
     switch (info.value) {
         case "0": archivo = 'pokemon.html'
             break;
-        case "1": archivo = 'pruebaQuery.html'
-            break;
-        case "2": archivo = 'pruebaQuery.html'
+        case "1": archivo = 'bulbasaur.html'
             break;
     }
     $.ajax({
@@ -21,7 +20,6 @@ function seleccion(){
         "dataType": 'html',
     }).done(function (data){
         $('#info_obtenida').html(data).get(0).innerHTML = data
-        console.log(data)
     })
 }
 
@@ -40,6 +38,23 @@ function cargarPokemon(){
     </tr>
     `
         document.getElementById("cuerpo_tabla").innerHTML = datosTxT
+    }
+}
 
+function cargarHabilidad(){
+    datosTxT = null
+
+    fetch(URL2, { method: 'GET' })
+        .then(x => x.json())
+        .then(x => x.abilities.forEach(pokemon => imprime_pokemon(pokemon)))
+
+    const imprime_pokemon = (elemento) => {
+        datosTxT += ` 
+    <tr>
+        <td>${elemento.ability.name}</td>
+        <td>${elemento.ability.url}</td>
+    </tr>
+    `
+        document.getElementById("cuerpo_tabla").innerHTML = datosTxT
     }
 }
