@@ -16,7 +16,7 @@ function seleccion(){
     switch (info.value) {
         case "0": archivo = 'pokemon.html'
             break;
-        case "1": archivo = 'bulbasaur.html'
+        case "1": archivo = 'listaPokemon.html'
             break;
     }
     $.ajax({
@@ -29,12 +29,13 @@ function seleccion(){
 
 function cargarPokemon(){
     let datosTxT
-
+    let texto2 
     fetch(URL1, { method: 'GET' })
         .then(x => x.json())
         .then(x => x.results.forEach(pokemon => imprime_pokemon(pokemon)))
 
     const imprime_pokemon = (elemento) => {
+        texto2 += ` ` 
         URLaux = URL1+elemento.name
         fetch(URLaux, {method: 'GET'})
             .then(x => x.json())
@@ -42,15 +43,37 @@ function cargarPokemon(){
 
             const imprime = (poke) => {
                 datosTxT += ` 
-                <tr>
-                    <td>${poke.name}</td>
-                    <td> <img src = "${poke.sprites.front_default}"> </img></td>
-                </tr>
+                <td>
+                    <div class="card" style="width: 18rem;">
+                        <img src="${poke.sprites.front_default}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title text-black-50">${poke.name}</h5>
+                        <h5 class="card-title text-black-50">${poke.id}</h5>
+                        </div>
+                    </div>
+                    </td>
                 `
-                    document.getElementById("cuerpo_tabla").innerHTML = datosTxT
+                document.getElementById("cuerpo_tabla").innerHTML = datosTxT
             }
     }
 }
+
+function listarPokemon() {
+    let datosTxT
+
+    fetch(URL1, { method: 'GET' })
+        .then(x => x.json())
+        .then(x => x.results.forEach(pokemon => listar(pokemon)))
+
+    const listar = (elemento) => {
+        datosTxT += ` 
+                    <option>${elemento.name}</option>
+                `
+        document.getElementById("info2").innerHTML = datosTxT
+    }
+}
+
+
 
 function cargarHabilidad(){
     datosTxT = null
