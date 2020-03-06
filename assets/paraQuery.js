@@ -1,5 +1,7 @@
 const URL1 = 'https://pokeapi.co/api/v2/pokemon'
 const URL2 = 'https://pokeapi.co/api/v2/pokemon/1/'
+const URL3 = 'https://pokeapi.co/api/v2/evolution-chain/1/'
+
 
 $(document).ready(() => {
     $('#seleccion_inicial').change(seleccion)
@@ -34,7 +36,6 @@ function cargarPokemon(){
         datosTxT += ` 
     <tr>
         <td>${elemento.name}</td>
-        <td>${elemento.url}</td>
     </tr>
     `
         document.getElementById("cuerpo_tabla").innerHTML = datosTxT
@@ -52,9 +53,21 @@ function cargarHabilidad(){
         datosTxT += ` 
     <tr>
         <td>${elemento.ability.name}</td>
-        <td>${elemento.ability.url}</td>
     </tr>
     `
+        document.getElementById("cuerpo_tabla").innerHTML = datosTxT
+    }
+}
+
+function cargarEvoluciones(){
+    datosTxT = null
+
+    fetch(URL3, { method: 'GET' })
+        .then(x => x.json())
+        .then(x => x.chain.evolves_to.forEach(pokemon => imprime_pokemon(pokemon)))
+
+    const imprime_pokemon = (elemento) => {
+        datosTxT += `<tr><a href="https://pokeapi.co/api/v2/pokemon-species/2/"> ${elemento.species.name} </a></tr>`
         document.getElementById("cuerpo_tabla").innerHTML = datosTxT
     }
 }
