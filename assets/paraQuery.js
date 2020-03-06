@@ -1,12 +1,14 @@
-const URL1 = 'https://pokeapi.co/api/v2/pokemon'
+const URL1 = 'https://pokeapi.co/api/v2/pokemon/'
 const URL2 = 'https://pokeapi.co/api/v2/pokemon/1/'
 const URL3 = 'https://pokeapi.co/api/v2/evolution-chain/1/'
-
+var URLaux = ''
+let photo 
 
 $(document).ready(() => {
     $('#seleccion_inicial').change(seleccion)
     seleccion()
 })
+
 
 function seleccion(){
     var info = $('#seleccion_inicial').get(0)
@@ -33,12 +35,20 @@ function cargarPokemon(){
         .then(x => x.results.forEach(pokemon => imprime_pokemon(pokemon)))
 
     const imprime_pokemon = (elemento) => {
-        datosTxT += ` 
-    <tr>
-        <td>${elemento.name}</td>
-    </tr>
-    `
-        document.getElementById("cuerpo_tabla").innerHTML = datosTxT
+        URLaux = URL1+elemento.name
+        fetch(URLaux, {method: 'GET'})
+            .then(x => x.json())
+            .then(pokemon => imprime(pokemon))
+
+            const imprime = (poke) => {
+                datosTxT += ` 
+                <tr>
+                    <td>${poke.name}</td>
+                    <td> <img src = "${poke.sprites.front_default}"> </img></td>
+                </tr>
+                `
+                    document.getElementById("cuerpo_tabla").innerHTML = datosTxT
+            }
     }
 }
 
