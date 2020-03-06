@@ -1,0 +1,28 @@
+<select id="info2">
+    <option value="0">Habilidad</option>
+    <option value="1">Proxima evolucion</option>
+</select>
+
+<script> 
+        $(document).ready(() => {
+            $('#info2').change(seleccion2)
+            seleccion2()
+        })
+
+        function seleccion2() {
+            var info2 = $('#info2').get(0)
+            var archivo = ''
+            switch (info2.value) {
+                case "0": archivo = 'habilidad.html'
+                    break;
+                case "1": archivo = 'evoluciones.html'
+                    break;
+            }
+            $.ajax({
+                "url": archivo,
+                "dataType": 'html',
+            }).done(function (data) {
+                $('#info_habilidad').html(data).get(0).innerHTML = data
+            })
+        }
+</script>
