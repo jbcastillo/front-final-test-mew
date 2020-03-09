@@ -3,6 +3,8 @@ const URL2 = 'https://pokeapi.co/api/v2/pokemon/1/'
 const URL3 = 'https://pokeapi.co/api/v2/evolution-chain/1/'
 var URLaux = ''
 let photo 
+let aux = ''
+let arregloLista = ''
 
 $(document).ready(() => {
     $('#seleccion_inicial').change(seleccion)
@@ -66,15 +68,20 @@ function listarPokemon() {
         .then(x => x.results.forEach(pokemon => listar(pokemon)))
 
     const listar = (elemento) => {
+        aux += ";" + URL1 + elemento.name
         datosTxT += ` 
                     <option>${elemento.name}</option>
                 `
         document.getElementById("info2").innerHTML = datosTxT
     }
+    arregloLista = aux.split(';')
+    imprimirLink()
 }
 
 
-
+function imprimirLink(){
+    console.log(arregloLista)
+}
 function cargarHabilidad(){
     datosTxT = null
 
