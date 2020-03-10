@@ -5,7 +5,8 @@ let auxCartas = ''
 let auxLista = ''
 let arregloLista = []
 let arregloCartas = []
-let datosTxT = ''
+let datosLista = ''
+let datosCarta = ''
 
 $(document).ready(() => {
     $('#seleccion_inicial').change(seleccion)
@@ -60,7 +61,7 @@ function promesa(url){
 }
 
 function imprime(poke){
-    datosTxT += ` 
+    datosCarta += ` 
     <div class="col mb-4">
         <div class="card">
         <img src="${poke.sprites.front_default}" class="card-img-top" alt="${poke.name}">
@@ -72,7 +73,7 @@ function imprime(poke){
         </div>
     </div>
     `
-    document.getElementById("cuerpo_carta").innerHTML = datosTxT
+    document.getElementById("cuerpo_carta").innerHTML = datosCarta
 }
 
 //Esta  funcion se ejecuta desde el archivo listarPokemon, en donde existe un selector con id el cual se sobre escribira con
@@ -84,10 +85,10 @@ function listarPokemon() {
 
     const listar = (elemento) => {
         auxLista += ";" + URL1 + elemento.name
-        datosTxT += ` 
+        datosLista += ` 
                     <option>${elemento.name}</option>
                 `
-        document.getElementById("info2").innerHTML = datosTxT
+        document.getElementById("info2").innerHTML = datosLista
     }
     arregloLista = auxLista.split(';')
     arregloLista.shift()
